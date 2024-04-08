@@ -1,9 +1,9 @@
 package tech.mwprojects.DSCommerce.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,7 +33,7 @@ public class Product implements Serializable{
 		joinColumns = @JoinColumn(name="product_id"),
 		inverseJoinColumns = @JoinColumn(name="category_id")
 	)
-	private List<Category> categories = new ArrayList<>();
+	private Set<Category> categories = new HashSet<>();
 	
 	public Product() {}
 
@@ -85,7 +85,7 @@ public class Product implements Serializable{
 		this.imageUrl = imageUrl;
 	}
 	
-	public List<Category> getCategories(){
+	public Set<Category> getCategories(){
 		return categories;
 	}
 
