@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -49,6 +50,10 @@ public class Order implements Serializable{
 		this.moment = moment;
 		this.status = status;
 		this.client = client;
+	}
+	
+	public Set<Product> getProducts(){
+		return items.stream().map(item->item.getProduct()).collect(Collectors.toSet());
 	}
 
 	public Integer getId() {

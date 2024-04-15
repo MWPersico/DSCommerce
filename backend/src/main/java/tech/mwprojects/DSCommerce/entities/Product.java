@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -52,6 +53,10 @@ public class Product implements Serializable{
 		this.imageUrl = imageUrl;
 	}
 
+	public Set<Order> getOrders(){
+		return items.stream().map(item->item.getOrder()).collect(Collectors.toSet());
+	}
+	
 	public Integer getId() {
 		return id;
 	}
