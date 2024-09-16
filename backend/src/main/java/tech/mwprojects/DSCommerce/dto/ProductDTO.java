@@ -5,7 +5,7 @@ import tech.mwprojects.DSCommerce.entities.Product;
 import java.io.Serializable;
 
 public class ProductDTO implements Serializable {
-    private static final Long SerialVersionUID = 1L;
+    private static final long SerialVersionUID = 1L;
 
     private final Integer id;
     private final String name;
