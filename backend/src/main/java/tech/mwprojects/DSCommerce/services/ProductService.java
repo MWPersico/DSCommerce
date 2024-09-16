@@ -26,9 +26,26 @@ public class ProductService {
         return new ProductDTO(repository.findById(id).get());
     }
     
+    @Transactional
     public ProductDTO create(ProductDTO productData) {
-    	Product product = new Product(productData);
-    	Product createdProduct = repository.save(product);
-    	return new ProductDTO(createdProduct);
+    	Product product = new Product();
+    	copyDtoToEntity(productData, product);
+    	
+    	return new ProductDTO(repository.save(product));
+    }
+    
+    @Transactional
+    public ProductDTO update(Integer id, ProductDTO productData) {
+    	Product product = repository.getReferenceById(id); // não busca no banco de dados, mas é monitorado pela JPA
+    	copyDtoToEntity(productData, product);
+    	
+    	return new ProductDTO(repository.save(product));
+    }
+    
+    private void copyDtoToEntity(ProductDTO dto, Product entity) {
+    	entity.setName(dto.getName());
+    	entity.setPrice(dto.getPrice());
+    	entity.setDescription(dto.getDescription());
+    	entity.setImageUrl(dto.getImageUrl());
     }
 }

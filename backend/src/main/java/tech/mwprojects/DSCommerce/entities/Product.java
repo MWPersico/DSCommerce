@@ -16,7 +16,6 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import tech.mwprojects.DSCommerce.dto.ProductDTO;
 
 @Entity
 @Table(name="tb_product")
@@ -52,10 +51,6 @@ public class Product implements Serializable{
 		this.description = description;
 		this.price = price;
 		this.imageUrl = imageUrl;
-	}
-	
-	public Product(ProductDTO dto) {
-		this(dto.getId(), dto.getName(),dto.getDescription(), dto.getPrice(), dto.getImageUrl());
 	}
 
 	public Set<Order> getOrders(){

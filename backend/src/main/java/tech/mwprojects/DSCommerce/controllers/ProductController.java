@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,5 +47,13 @@ public class ProductController {
     	
     	// Retorna o produto criado e o header Location com URL do recurso
     	return ResponseEntity.created(uri).body(created);
+    }
+    
+    @PutMapping(value="/{id}")
+    public ResponseEntity<ProductDTO> update(@PathVariable Integer id, @RequestBody ProductDTO product) {
+    	ProductDTO updated = service.update(id, product);
+    	
+ 	    // Retorna o produto criado e o header Location com URL do recurso
+    	return ResponseEntity.ok(updated);
     }
 }
