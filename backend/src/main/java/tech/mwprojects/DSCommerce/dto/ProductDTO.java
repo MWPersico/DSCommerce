@@ -1,15 +1,23 @@
 package tech.mwprojects.DSCommerce.dto;
 
-import tech.mwprojects.DSCommerce.entities.Product;
-
 import java.io.Serializable;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import tech.mwprojects.DSCommerce.entities.Product;
+
 public class ProductDTO implements Serializable {
-    private static final long SerialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private final Integer id;
+    @NotBlank(message = "Campo nome requerido")
+    @Size(min = 3, max =80, message = "Nome precisa ter de 3 a 80 caracteres")
     private final String name;
+    @NotBlank(message = "Campo descrição requerido")
+    @Size(min = 10, message = "Descrição precisa ter pelo menos 10 caracteres")
     private final String description;
+    @Positive(message = "O preço deve ser positivo")
     private final Double price;
     private final String imageUrl;
 
