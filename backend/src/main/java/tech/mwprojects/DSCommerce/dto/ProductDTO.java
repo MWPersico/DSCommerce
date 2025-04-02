@@ -1,10 +1,14 @@
 package tech.mwprojects.DSCommerce.dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import tech.mwprojects.DSCommerce.entities.Category;
 import tech.mwprojects.DSCommerce.entities.Product;
 
 public class ProductDTO implements Serializable {
@@ -20,17 +24,19 @@ public class ProductDTO implements Serializable {
     @Positive(message = "O preço deve ser positivo")
     private final Double price;
     private final String imageUrl;
+    private Set<CategoryDTO> categories = new HashSet<>();
 
-    public ProductDTO(Integer id, String name, String description, Double price, String imageUrl) {
+    public ProductDTO(Integer id, String name, String description, Double price, String imageUrl, Set<Category> categories) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.imageUrl = imageUrl;
+        this.categories = categories.stream().map(CategoryDTO::new).collect(Collectors.toSet());
     }
 
     public ProductDTO(Product product) {
-        this(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getImageUrl());
+        this(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getImageUrl(), product.getCategories());
     }
 
     public String getImageUrl() {
@@ -51,5 +57,9 @@ public class ProductDTO implements Serializable {
 
     public Double getPrice() {
         return price;
+    }
+
+    public Set<CategoryDTO> getCategories(){
+        return categories;
     }
 }
