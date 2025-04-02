@@ -15,6 +15,8 @@ import tech.mwprojects.DSCommerce.exceptions.DatabaseException;
 import tech.mwprojects.DSCommerce.exceptions.ResourceNotFoundException;
 import tech.mwprojects.DSCommerce.repositories.ProductRepository;
 
+import java.util.List;
+
 @Service
 public class ProductService {
     @Autowired
@@ -22,7 +24,14 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAll(String name, Pageable pageable){
-        return repository.searchByName(name, pageable).map(ProductDTO::new);
+        Page<Product> products = repository.searchByName(name, pageable);
+        List<Product> content = products.getContent();
+
+        if(!content.isEmpty()){
+            repository.getProductsCategories(content);
+        }
+
+        return products.map(ProductDTO::new);
     }
 
     @Transactional(readOnly = true)
