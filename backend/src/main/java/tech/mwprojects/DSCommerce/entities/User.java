@@ -2,17 +2,9 @@ package tech.mwprojects.DSCommerce.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="tb_user")
@@ -31,7 +23,9 @@ public class User implements Serializable{
 	
 	@OneToMany(mappedBy = "client") // One User to many Orders
 	private List<Order> orders = new ArrayList<>();
-	//private String[] roles;
+
+	@ManyToMany(mappedBy = "users")
+	private Set<Role> roles = new HashSet<>();
 	
 	public User() {}
 	
@@ -94,6 +88,10 @@ public class User implements Serializable{
 	
 	public List<Order> getOrders(){
 		return orders;
+	}
+
+	public Set<Role> getRoles(){
+		return roles;
 	}
 
 	@Override
