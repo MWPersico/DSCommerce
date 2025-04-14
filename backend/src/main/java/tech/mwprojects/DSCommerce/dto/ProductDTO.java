@@ -14,17 +14,19 @@ import tech.mwprojects.DSCommerce.entities.Product;
 public class ProductDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private final Integer id;
+    private Integer id;
     @NotBlank(message = "Campo nome requerido")
     @Size(min = 3, max =80, message = "Nome precisa ter de 3 a 80 caracteres")
-    private final String name;
+    private String name;
     @NotBlank(message = "Campo descrição requerido")
     @Size(min = 10, message = "Descrição precisa ter pelo menos 10 caracteres")
-    private final String description;
+    private String description;
     @Positive(message = "O preço deve ser positivo")
-    private final Double price;
-    private final String imageUrl;
+    private Double price;
+    private String imageUrl;
     private Set<CategoryDTO> categories = new HashSet<>();
+
+    public ProductDTO(){}
 
     public ProductDTO(Integer id, String name, String description, Double price, String imageUrl, Set<Category> categories) {
         this.id = id;
