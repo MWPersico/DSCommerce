@@ -5,10 +5,12 @@ import java.time.LocalDate;
 import java.util.*;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name="tb_user")
-public class User implements Serializable{
+public class User implements Serializable, UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -92,6 +94,48 @@ public class User implements Serializable{
 
 	public Set<Role> getRoles(){
 		return roles;
+	}
+
+	public void addRole(Role role){
+		roles.add(role);
+	}
+
+	public boolean hasRole(String roleName){
+		return roles.stream().anyMatch(x->x.getAuthority().equals(roleName));
+	}
+
+	public boolean hasRole(Role role){
+		return hasRole(role.getAuthority());
+	}
+
+	@Override
+	public String getUsername(){
+		return getEmail();
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return false;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities(){
+		return getRoles();
 	}
 
 	@Override
