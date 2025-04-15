@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import tech.mwprojects.DSCommerce.entities.User;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("""
@@ -14,4 +16,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
         WHERE TRIM(LOWER(a.email)) = TRIM(LOWER(:email))
     """)
     public User searchUserWithRolesByEmail(String email);
+
+    public Optional<User> findByEmail(String email);
 }
