@@ -45,14 +45,16 @@ public class ProductController {
     	// Retorna o produto criado e o header Location com URL do recurso
     	return ResponseEntity.created(uri).body(created);
     }
-    
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(value="/{id}")
     public ResponseEntity<ProductDTO> update(@PathVariable Integer id, @Valid @RequestBody ProductDTO product) {
     	ProductDTO updated = service.update(id, product);
     	
     	return ResponseEntity.ok(updated);
     }
-    
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value="/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id){
     	service.delete(id);
