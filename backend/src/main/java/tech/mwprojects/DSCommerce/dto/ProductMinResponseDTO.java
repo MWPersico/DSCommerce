@@ -8,7 +8,7 @@ public class ProductMinResponseDTO implements Serializable {
     private Integer id;
     private String name;
     private Double price;
-    private String imageUrl;
+    private String imgUrl;
 
     public ProductMinResponseDTO() {
     }
@@ -17,7 +17,7 @@ public class ProductMinResponseDTO implements Serializable {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.imageUrl = imageUrl;
+        this.imgUrl = imageUrl;
     }
 
     public ProductMinResponseDTO(Product product) {
@@ -36,5 +36,5 @@ public class ProductMinResponseDTO implements Serializable {
         return price;
     }
 
-    public String getImageUrl(){return imageUrl;}
+    public String getImageUrl(){return imgUrl;}
 }

@@ -9,11 +9,14 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
+import tech.mwprojects.DSCommerce.dto.CategoryDTO;
 import tech.mwprojects.DSCommerce.dto.ProductDTO;
 import tech.mwprojects.DSCommerce.dto.ProductMinResponseDTO;
+import tech.mwprojects.DSCommerce.entities.Category;
 import tech.mwprojects.DSCommerce.entities.Product;
 import tech.mwprojects.DSCommerce.exceptions.DatabaseException;
 import tech.mwprojects.DSCommerce.exceptions.ResourceNotFoundException;
+import tech.mwprojects.DSCommerce.repositories.CategoryRepository;
 import tech.mwprojects.DSCommerce.repositories.ProductRepository;
 
 import java.util.List;
@@ -22,6 +25,9 @@ import java.util.List;
 public class ProductService {
     @Autowired
     private ProductRepository repository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
     public Page<ProductMinResponseDTO> findAll(String name, Pageable pageable){
@@ -75,6 +81,9 @@ public class ProductService {
     	entity.setName(dto.getName());
     	entity.setPrice(dto.getPrice());
     	entity.setDescription(dto.getDescription());
-    	entity.setImageUrl(dto.getImageUrl());
+    	entity.setImageUrl(dto.getImgUrl());
+
+        entity.getCategories().clear();
+        entity.getCategories().addAll(dto.getCategories().stream().map(x -> categoryRepository.getReferenceById(x.getId())).toList());
     }
 }

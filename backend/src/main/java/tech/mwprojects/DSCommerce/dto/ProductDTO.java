@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import tech.mwprojects.DSCommerce.entities.Category;
@@ -23,17 +24,18 @@ public class ProductDTO implements Serializable {
     private String description;
     @Positive(message = "O preço deve ser positivo")
     private Double price;
-    private String imageUrl;
+    private String imgUrl;
+    @NotEmpty(message = "Deve ter pelo menos uma categoria")
     private Set<CategoryDTO> categories = new HashSet<>();
 
     public ProductDTO(){}
 
-    public ProductDTO(Integer id, String name, String description, Double price, String imageUrl, Set<Category> categories) {
+    public ProductDTO(Integer id, String name, String description, Double price, String imgUrl, Set<Category> categories) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.imageUrl = imageUrl;
+        this.imgUrl = imgUrl;
         this.categories = categories.stream().map(CategoryDTO::new).collect(Collectors.toSet());
     }
 
@@ -41,8 +43,8 @@ public class ProductDTO implements Serializable {
         this(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getImageUrl(), product.getCategories());
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
     public String getDescription() {
