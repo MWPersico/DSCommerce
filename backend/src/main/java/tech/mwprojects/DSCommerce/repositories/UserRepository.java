@@ -17,5 +17,13 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     """)
     public User searchUserWithRolesByEmail(String email);
 
+    @Query("""
+        SELECT a
+        FROM User a
+        JOIN FETCH a.roles
+        WHERE a.id = :id
+    """)
+    public Optional<User> findByIdWithRoles(Integer id);
+
     public Optional<User> findByEmail(String email);
 }

@@ -31,10 +31,13 @@ public class OrderService {
     @Autowired
     private OrderItemRepository orderItemRepository;
 
+    @Autowired
+    private AuthService authService;
+
     @Transactional(readOnly = true)
     public OrderResponseDTO getOrderById(Integer id){
         Order order = repository.getOrderWithItemsById(id).orElseThrow(()->new ResourceNotFoundException("Order with id "+id+" does not exist."));
-
+        authService.validateSelfOrAdmin(order.getClient().getId(), "cannot access another client's order.");
         return new OrderResponseDTO(order);
     }
 

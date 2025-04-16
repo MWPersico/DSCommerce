@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tech.mwprojects.DSCommerce.dto.AuthenticatedUserDTO;
 import tech.mwprojects.DSCommerce.entities.User;
+import tech.mwprojects.DSCommerce.exceptions.ResourceNotFoundException;
 import tech.mwprojects.DSCommerce.repositories.UserRepository;
 
 @Service
@@ -29,6 +30,11 @@ public class UserService implements UserDetailsService {
     @Transactional(readOnly = true)
     public AuthenticatedUserDTO getMe(){
         return new AuthenticatedUserDTO(authenticated());
+    }
+
+    @Transactional(readOnly = true)
+    public User getUserWithRolesById(Integer id){
+        return repository.findByIdWithRoles(id).orElseThrow(()->new ResourceNotFoundException("User with id "+id+"was not found."));
     }
 
     protected User authenticated(){
