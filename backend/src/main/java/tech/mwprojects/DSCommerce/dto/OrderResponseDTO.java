@@ -35,7 +35,7 @@ public class OrderResponseDTO implements Serializable {
                 order.getMoment(),
                 order.getStatus(),
                 new UserMinResponseDTO(order.getClient()),
-                new PaymentMinResponseDTO(order.getPayment()),
+                order.getPayment() !=null ? new PaymentMinResponseDTO(order.getPayment()) : null,
                 order.getItems().stream().map(OrderItemResponseDTO::new).collect(Collectors.toSet()),
                 order.getTotal()
         );

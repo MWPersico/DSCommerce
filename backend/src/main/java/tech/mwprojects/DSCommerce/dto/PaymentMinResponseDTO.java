@@ -11,12 +11,13 @@ public class PaymentMinResponseDTO implements Serializable {
 
     public PaymentMinResponseDTO(){}
 
-    public PaymentMinResponseDTO(Payment payment){
-        if(payment!=null){
+    public PaymentMinResponseDTO(Integer id, Instant moment) {
+        this.id = id;
+        this.moment = moment;
+    }
 
-            this.id = payment.getId();
-            this.moment = payment.getMoment();
-        }
+    public PaymentMinResponseDTO(Payment payment){
+        this(payment.getId(), payment.getMoment());
     }
 
     public Integer getId() {
