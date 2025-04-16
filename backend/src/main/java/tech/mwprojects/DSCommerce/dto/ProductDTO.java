@@ -5,10 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import tech.mwprojects.DSCommerce.entities.Category;
 import tech.mwprojects.DSCommerce.entities.Product;
 
@@ -22,6 +19,7 @@ public class ProductDTO implements Serializable {
     @NotBlank(message = "Campo descrição requerido")
     @Size(min = 10, message = "Descrição precisa ter pelo menos 10 caracteres")
     private String description;
+    @NotNull(message = "O campo não pode estar vazio")
     @Positive(message = "O preço deve ser positivo")
     private Double price;
     private String imgUrl;
