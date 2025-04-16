@@ -100,6 +100,10 @@ public class Order implements Serializable{
 		return items;
 	}
 
+	public Double getTotal(){
+		return getItems().stream().map(OrderItem::getSubtotal).reduce(0.0, Double::sum);
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
