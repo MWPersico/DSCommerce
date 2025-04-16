@@ -5,6 +5,8 @@ import java.net.URI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import jakarta.validation.Valid;
 import tech.mwprojects.DSCommerce.dto.ProductDTO;
+import tech.mwprojects.DSCommerce.dto.ProductMinResponseDTO;
 import tech.mwprojects.DSCommerce.services.ProductService;
 
 @RestController
@@ -23,7 +26,10 @@ public class ProductController {
 
     // Parâmetros de URL podem ser passados para paginação: /products?size=10&page=2&sort=name,desc
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAll(@RequestParam(name = "name",defaultValue = "") String name, Pageable pageable){
+    public ResponseEntity<Page<ProductMinResponseDTO>> findAll(
+            @RequestParam(name = "name",defaultValue = "") String name,
+            @PageableDefault(size = 12, sort = "name", direction = Sort.Direction.ASC) Pageable pageable
+    ){
         return ResponseEntity.ok(service.findAll(name, pageable)) ;
     }
 

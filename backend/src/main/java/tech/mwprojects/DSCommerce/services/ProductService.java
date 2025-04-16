@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
 import tech.mwprojects.DSCommerce.dto.ProductDTO;
+import tech.mwprojects.DSCommerce.dto.ProductMinResponseDTO;
 import tech.mwprojects.DSCommerce.entities.Product;
 import tech.mwprojects.DSCommerce.exceptions.DatabaseException;
 import tech.mwprojects.DSCommerce.exceptions.ResourceNotFoundException;
@@ -23,7 +24,7 @@ public class ProductService {
     private ProductRepository repository;
 
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAll(String name, Pageable pageable){
+    public Page<ProductMinResponseDTO> findAll(String name, Pageable pageable){
         Page<Product> products = repository.searchByName(name, pageable);
         List<Product> content = products.getContent();
 
@@ -31,7 +32,7 @@ public class ProductService {
             repository.getProductsCategories(content);
         }
 
-        return products.map(ProductDTO::new);
+        return products.map(ProductMinResponseDTO::new);
     }
 
     @Transactional(readOnly = true)
